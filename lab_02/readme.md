@@ -1,4 +1,4 @@
-# Aplikacje WWW, semestr 2024Z
+# Projektowanie Aplikacji Webowych, semestr 2025Z
 
 ## Lab 2 - narzędzie git
 ---
