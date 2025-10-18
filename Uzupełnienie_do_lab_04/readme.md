@@ -9,17 +9,17 @@ Jeżeli jeszcze tego nie zrobił_ś to to jest czas najwyższy, aby założyć k
 Gdy mamy już konto musimy kliknąć w prawym górnym rogu na ikonę swojego awatara (numer 1. na **_screenshocie 1_**). Następnie wybrać Wszystkie nasze repozytoria (numer 2. na **_screenshocie 1_**).
 
 **_Screenshot 1_**
-![Tu powinien być obrazek :)](./repo_1.png)
+![Tu powinien być obrazek :)](./repo_1.PNG)
 
 Następnie klikamy zielony przycisk `New`, aby utworzyć nowe repozytorium (**_screenchot 2_**):
 
 **_Screenshot 2_**
-![Tu powinien być obrazek :)](./repo_2.png)
+![Tu powinien być obrazek :)](./repo_2.PNG)
 
 Następnie powinien otworzyć nam się formularz tworzenia nowego repozytorium, w którym uzupełniamy nazwę repozytorium, na jakieś nam odpowiadające (1. na **_screenshocie 3_**). Resztę ustawień zostawiamy domyślnych tak jak na screenshocie. Zatwierdzamy zielonym przyciskiem `Create repository` (2. na **_screenshocie 3_**).
 
 **_Screenshot 3_**
-![Tu powinien być obrazek :)](./repo_3.png)
+![Tu powinien być obrazek :)](./repo_3.PNG)
 
 Mamy stworzone repozytorium zdalne! Ale **nie zamykaj jeszcze tej strony** - będzie nam potrzebna później. Teraz pora stworzyć repozytorium lokalne, w którym zawierać się będzie nasz projekt!
 
@@ -76,7 +76,7 @@ Ale co my mamy zacząć tu wpisywać? A no pamiętasz jak nie kazałem zamykać 
 
 **_Screenshot 8_**
 
-![Tu powinien być obrazek :)](./repo_4.png)
+![Tu powinien być obrazek :)](./repo_4.PNG)
 
 Przykładowo te polecenia mogą wyglądąć następująco:
 
@@ -189,7 +189,7 @@ Kontynuujemy prace w terminalu wpisując kolejno komendy:
 
 **_Screenshot 11_**
 
-![Tu powinien być obrazek :)](./working_django.png)
+![Tu powinien być obrazek :)](./working_django.PNG)
 
 ## 6. Konfiguracja bazy danych i superużytkownika:
 
@@ -431,7 +431,7 @@ Pozostaje pytanie jak to później ściagnąć w sali?
 
 **_Screenshot 18_**
 
-![Tu powinien być obrazek :)](./repo_5.png)
+![Tu powinien być obrazek :)](./repo_5.PNG)
 
 **_Screenshot 19_**
 
