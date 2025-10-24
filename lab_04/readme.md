@@ -1,4 +1,4 @@
-# Projektowanie Aplikacji Webowych, semestr 2024Z
+# Projektowanie Aplikacji Webowych, semestr 2025Z
 
 ## Lab 4
 ---
