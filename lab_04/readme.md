@@ -212,7 +212,7 @@ Każde pole w modelu jest przetwarzane i walidowane automatycznie przez Django O
 
 ## 2. Atrybuty modeli: 
 
-https://docs.djangoproject.com/pl/4.2/topics/db/models/#field-options
+https://docs.djangoproject.com/pl/5.2/topics/db/models/#field-options
 
 ---
 
