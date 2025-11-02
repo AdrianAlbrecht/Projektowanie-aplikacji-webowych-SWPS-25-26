@@ -3,175 +3,16 @@
 ## Lab 5 
 
 
-Okej, mamy już modele, ale co dalej z nimi? Możemy je dodawać, możemy je edytować, ale dalej wyświetlają nam się brzydko i niejasno i na dodatek tylko w panelu administratora. No to co teraz? Chcielibyśmy móc za pomocą kwerend do bazy danych móc pobrać te informacje o istniejących już danych i zacząć je obrabiać. Do tego posłuży nam klasa `QuerySet` z naszego modulu Django.
+Okej, mamy już modele, ale co dalej z nimi? Możemy je dodawać, możemy je edytować, ale dalej wyświetlają nam się brzydko i niejasno i na dodatek tylko w panelu administratora. No to co teraz? 
 
----
-
-#### **1. Klasa QuerySet i dostępne metody:**
-https://docs.djangoproject.com/pl/5.2/ref/models/querysets/
-
-Django ORM korzysta z obiektów `QuerySet` do wykonywania zapytań do bazy danych. `QuerySet` reprezentuje kolekcję obiektów modelu i pozwala na ich filtrowanie, sortowanie oraz manipulowanie danymi. Poniżej znajdziesz przegląd najczęściej używanych metod `QuerySet`, ich zastosowanie i przykłady.
-
-### 1. **`all()`**
-   - Zwraca wszystkie obiekty modelu.
-   - **Przykład**:
-     ```python
-     from myapp.models import Product
-     products = Product.objects.all()
-     ```
-
-### 2. **`filter(**kwargs)`**
-   - Zwraca obiekty spełniające podane kryteria.
-   - **Przykład**:
-     ```python
-     active_products = Product.objects.filter(is_active=True)
-     ```
-
-### 3. **`exclude(**kwargs)`**
-   - Zwraca obiekty, które nie spełniają podanych kryteriów.
-   - **Przykład**:
-     ```python
-     inactive_products = Product.objects.exclude(is_active=True)
-     ```
-
-### 4. **`get(**kwargs)`**
-   - Zwraca jeden obiekt spełniający podane kryteria. Podnosi wyjątek `DoesNotExist`, jeśli obiekt nie istnieje, lub `MultipleObjectsReturned`, jeśli istnieje więcej niż jeden.
-   - **Przykład**:
-     ```python
-     product = Product.objects.get(id=1)
-     ```
-
-### 5. **`count()`**
-   - Zwraca liczbę obiektów w `QuerySet`.
-   - **Przykład**:
-     ```python
-     number_of_products = Product.objects.filter(is_active=True).count()
-     ```
-
-### 6. **`exists()`**
-   - Sprawdza, czy `QuerySet` zawiera jakiekolwiek obiekty (zwraca `True` lub `False`).
-   - **Przykład**:
-     ```python
-     has_active_products = Product.objects.filter(is_active=True).exists()
-     ```
-
-### 7. **`order_by(*fields)`**
-   - Sortuje obiekty według podanych pól. Dodaj `-` przed nazwą pola, aby sortować malejąco.
-   - **Przykład**:
-     ```python
-     sorted_products = Product.objects.order_by('price')
-     ```
-
-### 8. **`distinct()`**
-   - Zwraca unikalne obiekty w `QuerySet`.
-   - **Przykład**:
-     ```python
-     unique_categories = Product.objects.values('category').distinct()
-     ```
-
-### 9. **`values(*fields)`**
-   - Zwraca `QuerySet` słowników, z wartościami tylko dla podanych pól.
-   - **Przykład**:
-     ```python
-     product_names = Product.objects.values('name')
-     ```
-
-### 10. **`aggregate(**kwargs)`**
-   - Zwraca słownik z wynikami agregacji na poziomie całego `QuerySet`.
-   - **Przykład**:
-     ```python
-     from django.db.models import Sum
-     total_price = Product.objects.aggregate(Sum('price'))
-     ```
-
-### 11. **`first()`**
-   - Zwraca pierwszy obiekt w `QuerySet` lub `None`, jeśli `QuerySet` jest pusty.
-   - **Przykład**:
-     ```python
-     first_product = Product.objects.all().first()
-     ```
-
-### 12. **`last()`**
-   - Zwraca ostatni obiekt w `QuerySet` lub `None`, jeśli `QuerySet` jest pusty.
-   - **Przykład**:
-     ```python
-     last_product = Product.objects.all().last()
-     ```
-
-### 13. **`update(**kwargs)`**
-   - Umożliwia aktualizację wielu obiektów w `QuerySet` za pomocą jednego zapytania.
-   - **Przykład**:
-     ```python
-     Product.objects.filter(is_active=True).update(price=F('price') * 1.1)  # Zwiększa cenę o 10%
-     ```
-
-### 14. **`delete()`**
-   - Usuwa obiekty z bazy danych. Zwraca liczbę usuniętych obiektów oraz słownik informacyjny.
-   - **Przykład**:
-     ```python
-     deleted_count, _ = Product.objects.filter(is_active=False).delete()
-     ```
-
-### 15. **`iterator()`**
-   - Umożliwia iterowanie przez `QuerySet`, co jest przydatne w przypadku dużych zbiorów danych.
-   - **Przykład**:
-     ```python
-     for product in Product.objects.iterator():
-         print(product.name)
-     ```
-
-### 16. **`only(*fields)`**
-   - Pobiera tylko podane pola z bazy danych, co może poprawić wydajność.
-   - **Przykład**:
-     ```python
-     products = Product.objects.only('name', 'price').all()  # Pobiera tylko 'name' i 'price'
-     ```
-
-### 17. **`get_or_create(**kwargs)`**
-   - Zwraca krotkę (obiekt, utworzone) lub zwraca istniejący obiekt, jeśli już istnieje.
-   - **Przykład**:
-     ```python
-     product, created = Product.objects.get_or_create(name='New Product', defaults={'price': 10.0})
-     ```
-
-### 18. **`bulk_create(objs, batch_size=None)`**
-   - Umożliwia szybkie tworzenie wielu obiektów w jednym zapytaniu.
-   - **Przykład**:
-     ```python
-     products = [Product(name='Product 1'), Product(name='Product 2')]
-     Product.objects.bulk_create(products)
-     ```
-
-### 19. **`bulk_update(objs, fields)`**
-   - Umożliwia szybkie aktualizowanie wielu obiektów w jednym zapytaniu.
-   - **Przykład**:
-     ```python
-     products = Product.objects.all()
-     for product in products:
-         product.price += 1.0
-     Product.objects.bulk_update(products, ['price'])
-     ```
-
-### 20. **`update_or_create(**kwargs)`**
-   - Umożliwia aktualizowanie istniejącego obiektu lub tworzenie nowego, jeśli obiekt nie istnieje.
-   - **Przykład**:
-     ```python
-     product, created = Product.objects.update_or_create(
-         name='Existing Product',
-         defaults={'price': 20.0}
-     )
-     ```
-
-Metody `QuerySet` w Django ORM są potężne i elastyczne, umożliwiając łatwe manipulowanie danymi w bazie danych. Wybór odpowiednich metod może znacząco poprawić wydajność aplikacji.
-
-### **2 Przesłanianie metod oraz właściwości META.**  
+### **1 Przesłanianie metod oraz właściwości META.**  
 
 W Django istnieją dwa kluczowe mechanizmy konfiguracyjne dla modeli: **przesłanianie metod** oraz **konfiguracja właściwości `Meta`**. Każdy z nich umożliwia modyfikację zachowania modeli, choć działają na różnych poziomach:
 
 1. **Przesłanianie metod** – umożliwia nadpisywanie metod klasy `Model`, aby dostosować logikę działania konkretnych operacji.
 2. **Klasa Meta** – dostarcza zestaw opcji konfiguracyjnych, które wpływają na sposób działania modelu, takich jak jego nazwa, kolejność, uprawnienia, a także zachowanie w relacji z innymi modelami.
 
-#### 2.1. Przesłanianie metod
+#### 1.1. Przesłanianie metod
 
 Przesłanianie (lub nadpisywanie) metod to proces redefiniowania metod w modelu, aby zmienić domyślne zachowanie. Django oferuje kilka metod, które można przesłonić w celu dostosowania działania modeli:
 
@@ -246,7 +87,7 @@ class MyModel(models.Model):
         return reverse("my_model_detail", args=[str(self.id)])
 ```
 
-#### 2.2. Właściwości `Meta`
+#### 1.2. Właściwości `Meta`
 
 Klasa wewnętrzna `Meta` zawiera opcje konfiguracyjne modelu, które wpływają na zachowanie i charakterystykę całego modelu.
 
@@ -365,7 +206,7 @@ W powyższym modelu:
 - `get_absolute_url` zwraca URL szczegółowy produktu.
 - `Meta` definiuje domyślną kolejność, nazwę wyświetlaną i ograniczenie `price_gte_0`, które gwarantuje, że cena zawsze będzie większa lub równa zero.
 
-#### **3 Modyfikacja listy pól w widoku listy i filtry w module admin**
+#### **2 Modyfikacja listy pól w widoku listy i filtry w module admin**
 
 W panelu administracyjnym dla obiektów `Osoba` nie są widoczne wszystkie pola na liście wszystkich obiektów lecz tylko jedno z nich. Aby to zrobić należy najpierw zdefiniować w pliku `admin.py` klasę admin dla danego modelu, a następnie zadeklarować pole do wyświetlenia w zmiennej `list_display`. Przykład poniżej:
 
