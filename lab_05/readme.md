@@ -251,16 +251,7 @@ Zmodyfikuj kod aplikacji tak, żeby na liście modeli `Osoba` w panelu administr
 **Zadanie 5**  
 Dodaj filtr dla stanowisk oraz daty utworzenia dla klasy `Osoba` oraz dla nazw dla klasy `Stanowisko`. Przetestuj działanie filtrów.
 
-**Zadanie 6 (CIĘŻSZE ZADANIE, opcjonalne, dla chętnych)**  
-Korzystając z dokumentacji API klasy QuerySet z pkt. 3 wykonaj następujące zapytania za pomocą shella Django (**kod Pythona z zapytaniami umieść w pliku lab_5_zadanie_6.md w swoim repozytorium**):
-* wyświetl wszystkie obiekty modelu `Osoba`,
-* wyświetl obiekt modelu `Osoba` z id = 3,
-* wyświetl obiekty modelu `Osoba`, których nazwa rozpoczyna się na wybraną przez Ciebie literę alfabetu (tak, żeby był co najmniej jeden wynik),
-* wyświetl unikalną listę stanowisk przypisanych dla modeli `Osoba`,
-* wyświetl nazwy stanowisk posortowane alfabetycznie malejąco,
-* dodaj nową instancję obiektu klasy `Osoba` i zapisz w bazie.
-
-**Zadanie 7**  
+**Zadanie 6**  
 Jeżeli nie robiłeś/-aś tego wcześniej to zatwierdź wszystkie zmiany w danym branchu i spróbuj wykonać merge z główną gałęzią. Proponuję wykonać tę operację przy pomocy interfejsu Pull Request z platformy Github, aby przetestować wbudowane narzędzie do wspomagania procesu merge (o ile wystąpią konflikty).
 
 **Dla chętnych**  
