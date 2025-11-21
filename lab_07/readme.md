@@ -288,7 +288,7 @@ def book_list(request):
     if request.method == 'GET':
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     elif request.method == 'POST':
         serializer = BookSerializer(data=request.data)
@@ -317,13 +317,13 @@ def book_detail(request, pk):
     """
     if request.method == 'GET':
         serializer = BookSerializer(book)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'PUT':
         serializer = BookSerializer(book, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE':
@@ -480,11 +480,12 @@ Django REST Framework robi to automatycznie.
 **_Listing 7_**
 ```python
 from django.urls import path
-from .views import BookListView, BookDetailView
+from . import views
 
 urlpatterns = [
-    path("books/", BookListView.as_view(), name="book-list"),
-    path("books/<int:pk>/", BookDetailView.as_view(), name="book-detail"),
+    ...
+    path("books_cbv/", views.BookListView.as_view(), name="book-list"),
+    path("books_cbv/<int:pk>/", views.BookDetailView.as_view(), name="book-detail"),
 ]
 ```
 
@@ -515,7 +516,7 @@ Wykonaj zadania na nowym branchu o nazwie `lab_07`. Na koniec pracy, po przetest
 
 **Zadanie 2 (CIĘŻSZE ZADANIE, opcjonalne, dla chętnych)**
 
-Korzystając z dokumentacji API klasy QuerySet z pkt. 1 wykonaj następujące zapytania za pomocą shella Django (**kod Pythona z zapytaniami umieść w pliku lab_5_zadanie_6.md w swoim repozytorium**):
+Korzystając z dokumentacji API klasy QuerySet z pkt. 1 wykonaj następujące zapytania za pomocą shella Django (**kod Pythona z zapytaniami umieść w pliku lab_7_zadanie_2.md w swoim repozytorium**):
 * wyświetl wszystkie obiekty modelu `Osoba`,
 * wyświetl obiekt modelu `Osoba` z id = 3,
 * wyświetl obiekty modelu `Osoba`, których nazwa rozpoczyna się na wybraną przez Ciebie literę alfabetu (tak, żeby był co najmniej jeden wynik),
