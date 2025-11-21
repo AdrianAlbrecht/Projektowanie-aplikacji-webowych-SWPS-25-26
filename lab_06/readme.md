@@ -276,7 +276,7 @@ Oprócz automatycznej walidacji wartości pól na podstawie wybranego typu pola 
 
 # walidacja wartości pola title
     def validate_title(self, value):
-        if not value.istitle():
+        if not value[0].isupper():
             raise serializers.ValidationError(
                 "Tytuł książki powinien rozpoczynać się wielką literą!"
             )
@@ -306,12 +306,12 @@ class AuthorSerializer(serializers.ModelSerializer):
         country = data.get('country')
 
         # Imię i nazwisko powinny zaczynać się wielką literą
-        if first_name and not first_name.istitle():
+        if first_name and not (first_name[0].isupper() and first_name.isalpha()):
             raise serializers.ValidationError(
                 {"first_name": "Imię powinno rozpoczynać się wielką literą!"}
             )
 
-        if last_name and not last_name.istitle():
+        if last_name and not (last_name[0].isupper() and last_name.isalpha()):
             raise serializers.ValidationError(
                 {"last_name": "Nazwisko powinno rozpoczynać się wielką literą!"}
             )
