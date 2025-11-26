@@ -529,7 +529,7 @@ Korzystając z dokumentacji API klasy QuerySet z pkt. 1 wykonaj następujące za
  Bazując na przykładach z bieżącego laboratorium przygotuj endpointy dla modeli `Osoba` i `Stanowisko`:
    * wyświetlanie, dodawanie i usuwanie pojedynczego obiektu typu `Osoba`,
    * wyświetlanie listy obiektów typu `Osoba`,
-   * wyświetlenie listy obiektów typu `Osoba`, które zawierają w polu `nazwa` zadany łańcuch znaków,
+   * wyświetlenie listy obiektów typu `Osoba`, które zawierają w polu `nazwisko` zadany łańcuch znaków,
    * wyświetlanie, dodawanie i usuwanie pojedynczego obiektu typu `Stanowisko`,
    * wyświetlanie listy obiektów typu `Stanowisko`.
 
@@ -539,7 +539,7 @@ Korzystając z dokumentacji API klasy QuerySet z pkt. 1 wykonaj następujące za
    * dodaj dwa nowe obiekty `Osoba` eksperymentując z różnymi polami,
    * zmodyfikuj jeden obiekt typu `Osoba`,
    * usuń jeden obiekt typu `Osoba`,
-   * wyświetl wszystkie obiekty, które w nazwie zawierają literę `a`.
+   * wyświetl wszystkie obiekty, które w nazwisku zawierają literę `a`.
 
 **Zadanie 5**
 
