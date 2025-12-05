@@ -255,7 +255,9 @@ Aktualnie w mojej bazie dodane są poniższe obiekty Osoba.
 ```
 
 Kilka słów wyjaśnień do powyższego pliku.  
-Znacznik `{% extends "biblioteka\base.html" %}` informuje silnik szablonów o tym, że ten plik rozszerza szablon wskazany w ścieżce, tzn. że jeżeli zdefiniujemy w nim znaczniki bloków o tej samej nazwie co w szablonie, zostaną one podmienione na zawartość bloków zdefiniowanych tutaj jeszcze przed wyświetleniem w przeglądarce. Dzięki temu możemy zamieniać w poszczególnych widokach tylko wybrane fragmenty.  
+Znacznik `{% extends "biblioteka\base.html" %}` informuje silnik szablonów o tym, że ten plik rozszerza szablon wskazany w ścieżce, tzn. że jeżeli zdefiniujemy w nim znaczniki bloków o tej samej nazwie co w szablonie, zostaną one podmienione na zawartość bloków zdefiniowanych tutaj jeszcze przed wyświetleniem w przeglądarce. Dzięki temu możemy zamieniać w poszczególnych widokach tylko wybrane fragmenty.
+> !!!UWAGA!!! W systemie Windows ściężkę definiujemy przez operator `\`, więc nasza ścieżkaa wygląda jako `biblioteka\base.html`. _**ALE**_ jeżeli używasz Linuxa czy MacOS to ścieżka definiowana jest przez operator `/`, zatem należy zmienić ścieżkę na następującą `biblioteka/base.html` i skrupulatnie używać tego rodzaju definicji i operatora w każdym innym miejscu :)
+
 Znacznik `{% for osoba in osoby %}` oznacza uruchomienie pętli `for` przed wyświetleniem szablonu, która oczekuje istnienia w przestrzeni tego szablonu (przekażemy ją w definicji widoku) zmiennej `osoby`, którą można iterować (przechodzić po jej elementach), gdzie przy każdym przejściu pobierany będzie jeden obiekt `osoba` i zapisywany do zmiennej lokalnej `osoba` tej pętli i powtarzane będą kolejne linie, aż do znacznika `{% endfor %}`.  
 Zmienne takie jak `{{ osoba.imie }}` odwołują się do własności pojedynczego obiektu `osoba` i w szablonie zostaną zamienione na ich postać łańcuchową (w uproszczeniu tekstową, tak jakbyśmy na każdej z nich wywołali funkję `print()`). Wszystko co zdefiniowane w pętli, zostanie wywołane i powielone tyle razy ile obiektów znajdzie się w zmiennej `osoby`.
 
@@ -481,9 +483,9 @@ _**Listing 18**_
 
         <label for="plec">Płeć:</label>
         <select id="plec" name="plec">
-            <option value="I">inna</option>
-            <option value="M">mężczyzna</option>
-            <option value="K">kobieta</option>
+            <option value="1">kobieta</option>
+            <option value="2">mężczyzna</option>
+            <option value="3">inna</option>
         </select><br><br>
 
         <label for="stanowisko">Stanowisko:</label>
