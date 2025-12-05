@@ -212,22 +212,21 @@ W panelu administracyjnym dla obiektów `Osoba` nie są widoczne wszystkie pola 
 
 **_Listing 2_**
 ```python
-class PersonAdmin(admin.ModelAdmin):
+class OsobaAdmin(admin.ModelAdmin):
     # zmienna list_display przechowuje listę pól, które mają się wyświetlać w widoku listy danego modelu w panelu administracynym
-    list_display = ['name', 'shirt_size']
+    list_display = ["imie" , "nazwisko" , "stanowisko"]
 
 # ten obiekt też trzeba zarejestrować w module admin
-admin.site.register(Person, PersonAdmin)
+admin.site.register(Osoba, OsobaAdmin)
 ```
 
 W panelu administracyjnym możliwe jest również dodanie filtrów do widoków. Cały proces polega na dodaniu pola `filter_list` w klasie admin danego modułu:
 
 **_Listing 3_**
 ```python
-# przykład i wizualizacja dla modeli Person oraz Team.
-
-class PersonAdmin(admin.ModelAdmin):
-    list_filter = ('team')
+class OsobaAdmin(admin.ModelAdmin):
+    list_display = ["imie" , "nazwisko" , "stanowisko"]
+    list_filter = ["stanowisko" , "data_dodania"]
 ```
 ![filtry](filters.png)
  
