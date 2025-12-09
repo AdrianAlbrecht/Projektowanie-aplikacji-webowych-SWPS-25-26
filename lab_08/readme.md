@@ -692,7 +692,7 @@ Spróbuj dodać widok, który pozwoli dodawać obiekty typu `Book` oraz `Stanowi
 
 **Zadanie 3**
 
-Spróbuj dodać widok, który wyświetli listę obiektów typu `Osoba`, które zawierają w polu `nazwa` zadany łańcuch znaków bazując na już stworzonym widoku REST API.
+Spróbuj dodać widok, który wyświetli listę obiektów typu `Osoba`, które zawierają w polu `nazwisko` zadany łańcuch znaków bazując na już stworzonym widoku REST API.
 
 **Zadanie 4**
 
