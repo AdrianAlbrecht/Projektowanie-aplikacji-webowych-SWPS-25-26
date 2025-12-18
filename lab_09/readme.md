@@ -19,7 +19,7 @@ Aby dla danego endpointu określić restrykcje polegającą na dostępie tylko d
 
 **Krok 1 - przebudowanie endpointu dla klasy Book.**
 
-Przyjmijmy, że żądanie GET będzie możliwe bez restrykcji, a pozostałe będą wymagały uwierzytelnionego użytkownika.
+Przyjmijmy, że żądanie GET (i CREATE dla listy) będzie możliwe bez restrykcji, a pozostałe będą wymagały uwierzytelnionego użytkownika.
 Aktualnie wszystkie metody (PUT, GET, DELETE) są zdefiniowane w jednej funkcji, co utrudnia nam możliwość rozdzielenia uprawnień dla każdego z nich.
 Rozdzielimy więc oba widoki. Dla przypomnienia, poniżej oryginalny kod dla endpointów związanych z klasą Book.
 
@@ -33,7 +33,7 @@ from .models import Book
 from .serializers import BookSerializer
 
 # określamy dostępne metody żądania dla tego endpointu
-@api_view(['GET'])
+@api_view(['GET', "POST"])
 def book_list(request):
     """
     Lista wszystkich obiektów modelu Book.
@@ -42,6 +42,14 @@ def book_list(request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = BookSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -91,7 +99,7 @@ from .models import Book
 from .serializers import BookSerializer
 
 # określamy dostępne metody żądania dla tego endpointu
-@api_view(['GET'])
+@api_view(['GET', "POST"])
 def book_list(request):
     """
     Lista wszystkich obiektów modelu Book.
@@ -100,6 +108,14 @@ def book_list(request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = BookSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -177,7 +193,7 @@ urlpatterns = [
 ```
 Docelowo niezłym pomysłem jest budowanie oddzielnego endpointu dla każdej operacji, co zmniejszy ilość refactoringu, który będzie trzeba wykonać w przyszłości jeżeli pojawi się potrzeba dodania uprawnień dla każdego z nich z osobna.
 
-Po przetestowaniu tych dwóch endpointów powinniśmy móc wyświetlać obiekty typu Person, ale bez uwierzytelnienia nie możemy ich modyfikować ani usuwać.
+Po przetestowaniu tych dwóch endpointów powinniśmy móc wyświetlać obiekty typu `Book`, ale bez uwierzytelnienia nie możemy ich modyfikować ani usuwać.
 
 **Krok 2 - dodanie możliwości zalogowania się poprzez interfejs API dostarczony przez DRF.**
 
@@ -355,8 +371,8 @@ curl -H "Authorization: Token <twój_token>" http://127.0.0.1:8000/api/some-endp
 
 Niestety nie ma prostego sposobu, żeby dodać ręcznie taki token do pamięci przeglądarki. Można to zrobić w Postmanie, co pokażemy później.
 
-#### 5. **Przykład API z ochroną przez token**
-W `views.py` utwórz widok chroniony przez autentyfikację:
+#### 5. **Przykład CBV API z ochroną przez token**
+Widok ClassBasedView chroniony przez autentyfikację mógłby wyglądać tak. Tutaj nie definiujemy konkretnej metody a jedynie sprawdzamy, czy jest zautentykowany użytkownik. _**TEGO KODU NIE MUSIMY DODAWAĆ DO NASZEJ APKI**_:
 
 **_Listing 8_**
 ```python
@@ -371,7 +387,7 @@ class ProtectedView(APIView):
         return Response({"message": "Hello, authenticated user!"})
 ```
 
-Dodaj trasę w `urls.py`:
+Trasę do tego endpointu może wyglądać tak (_**TEGO KODU NIE MUSIMY DODAWAĆ DO NASZEJ APKI - to tylko przykład**_:
 
 **_Listing 9_**
 ```python
@@ -393,26 +409,26 @@ Autentykacja poprzez token wymaga dodania odpowiedniego atrybutu w nagłówku ż
 
 W przypadku narzędzia `http` wiersza poleceń (Mac) może to wyglądać tak:
 ```bash
-http http://127.0.0.1:8000/hello/ 'Authorization: Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf'
+http http://127.0.0.1:8000/biblioteka/books/1/ 'Authorization: Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf'
 
 # lub
-http http://127.0.0.1:8000/hello/ 'Authorization: Bearer 9054f7aa9305e012b3c2300408c3dfdf390fcddf'
+http http://127.0.0.1:8000/biblioteka/books/1/ 'Authorization: Bearer 9054f7aa9305e012b3c2300408c3dfdf390fcddf'
 
 ```
 
 W przypadku polecenia `curl`:
 ```bash
-curl -H "Authorization: Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf" http://127.0.0.1:8000/hello/ 
+curl -H "Authorization: Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf" http://127.0.0.1:8000/biblioteka/books/1/ 
 
 # lub
 
-curl -H "Authorization: Bearer 9054f7aa9305e012b3c2300408c3dfdf390fcddf" http://127.0.0.1:8000/hello/ 
+curl -H "Authorization: Bearer 9054f7aa9305e012b3c2300408c3dfdf390fcddf" http://127.0.0.1:8000/biblioteka/books/1/
 ```
  Z poziomu czystego Pythona:
  ```python
  import requests
 
-url = 'http://127.0.0.1:8000/hello/'
+url = 'http://127.0.0.1:8000/biblioteka/books/1/'
 # poniżej też może nastąpić konieczność zamiany słowa Token na Bearer
 headers = {'Authorization': 'Token 9054f7aa9305e012b3c2300408c3dfdf390fcddf'}
 r = requests.get(url, headers=headers)
@@ -454,6 +470,7 @@ Dodatkowo, dla widoków (endpointów), które będą uwierzytelniane poprzez tok
 
 1. Dodaj widok logowania i wylogowania w `views.py`:
 
+**_Listing 11_**
 ```python
 from django.contrib.auth import authenticate, login, logout
 
@@ -476,6 +493,7 @@ def user_logout(request):
 
 2. Stwórz szablon `login.html`:
 
+**_Listing 12_**
 ```html
 {% extends "biblioteka/base.html" %}
 
@@ -497,6 +515,7 @@ def user_logout(request):
 
 3. Zabezpiecz widok dekoratorem `@login_required`. Dekorator ten przyjmuje jako parametr nazwany `login_url` nazwę erefencyjną widoku do logowania.
 
+**_Listing 13_**
 ```python
 from django.contrib.auth.decorators import login_required
 
@@ -511,6 +530,7 @@ W Django w szablonach możemy sprawdzić, czy użytkownik jest zalogowany za pom
 
 Zmodyfikowany plik `base.html` wyglądąłby zatem następująco:
 
+**_Listing 14_**
 ```html
 <!DOCTYPE html>
 <html>
@@ -541,10 +561,10 @@ Zmodyfikowany plik `base.html` wyglądąłby zatem następująco:
 
 5. Dodaj nowe endpointy do `urls.py` w folderze aplikacji:
 
+**_Listing 15_**
 ```python
     path('login/', views.user_login, name='user-login'),
     path('logout/', views.user_logout, name='user-logout'),
-    path('osoby/', views.osoba_list_html, name='osoba-list-html'),
 ```
 
 #### TokenAuthentication:
@@ -552,6 +572,8 @@ Zmodyfikowany plik `base.html` wyglądąłby zatem następująco:
 Niestety z tokenem dla HTML jest nieco ciężej...
 
 1. W `views.py` można zrobić prosty endpoint logowania i wylogowania tokenowego:
+
+**_Listing 16_**
 ```python
 from rest_framework.authtoken.models import Token
 
@@ -579,6 +601,7 @@ def drf_token_logout(request):
 
 W tradycyjnych widokach HTML nie ma wbudowanego dekoratora session+token. Dlatego musimy utworzyć swój własny i umieścić go np. w `views.py`:
 
+**_Listing 17_**
 ```python
 from functools import wraps
 
@@ -597,13 +620,17 @@ def drf_token_required(view_func):
 
 ```
 
-3. Zabezpieczenie widoku listy osób
+3. Zabezpieczenie widoku listy osób:
+
+**_Listing 18_**
 ```python
 @drf_token_required
 def osoba_list_html(request):
 ```
 
 4. Modyfikacja fragmentu `base.html` do logowania:
+
+**_Listing 19_**
 ```html
             {% if request.session.token %}
                 <a href="{% url 'drf-token-logout' %}">Wyloguj</a>
@@ -613,6 +640,8 @@ def osoba_list_html(request):
 ```
 
 5. Dodajemy do `urls.py` w naszej aplikacji logowanie tokenem:
+
+   **_Listing 20_**
 ```python
     path('token/login/', views.drf_token_login, name='drf-token-login'),
     path('token/logout/', views.drf_token_logout, name='drf-token-logout'),
