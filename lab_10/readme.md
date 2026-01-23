@@ -93,7 +93,7 @@ Implementacja logiki tych uprawnień spoczywa w całości na programiście.
 Możliwe jest również weryfikowanie uprawnień na poziomie szablonów widoków Django (jeżeli to jest nasza docelowa technologia wizualizacji dla projektu) odwołując się do zmiennej `perms` w szablonie.
 
 **_Listing 4_** (fragment szablonu `osoba\detail.html`)
-```python
+```html
 #...
 {% if perms.biblioteka.delete_osoba %}
     <form method="post">
@@ -393,7 +393,7 @@ class OwnerOnlyView(APIView):
 >* żądania `PUT` i `PATCH` wymagają posiadania prawa `change` na modelu,
 >* żądania `DELETE` wymagają posiadania prawa `delete` na modelu.
 >
->A gdzie żądanie `GET`? Otóż chociaż mogłoby się wydawać logicznym, że powinno >być mapowanie na uprawnienie `view` dla modelu, to tak nie jest. Można jednak >rozszerzyć bazową klasę `DjangoModelPermissions` i dodać tę funkcjonalność.
+>A gdzie żądanie `GET`? Otóż chociaż mogłoby się wydawać logicznym, że powinno być mapowanie na uprawnienie `view` dla modelu, to tak nie jest. Można jednak rozszerzyć bazową klasę `DjangoModelPermissions` i dodać tę funkcjonalność.
 >
 >**_Listing 9_** 
 >
@@ -402,7 +402,6 @@ class OwnerOnlyView(APIView):
 >import copy
 >
 >from rest_framework import permissions
->
 >
 >class CustomDjangoModelPermissions(permissions.DjangoModelPermissions):
 >
@@ -414,7 +413,7 @@ class OwnerOnlyView(APIView):
 >### A jak zdefiniować swoje customowe uprawnienie w DRF wykorzystująć już uprawnienia dodane w modelu?
 >
 >Przykład:
->
+>**_Listing 10_** 
 >```python
 >from rest_framework.permissions import BasePermission
 >
@@ -432,7 +431,7 @@ class OwnerOnlyView(APIView):
 >lub CBV (Class Based View):
 >
 >```python
->permission_classes = [CanViewOsoba]
+>permission_classes = [IsAuthenticated, CanViewOsoba]
 >```
 
 ## **Zadania**
