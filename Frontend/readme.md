@@ -1,0 +1,1 @@
+Poniższe pliki służą jako uzupełnienie wiadomości związanych z częścią wizualną (frontend) aplikacji, o ile ktoś wybrał ściężkę monolityczną aplikacji zamiast REST API.
