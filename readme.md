@@ -91,6 +91,16 @@ Dla ukazania "ocen" (jeżeli byłoby to potrzebne z jakiś względów) suma punk
 
 Innymi słowy trzeba uzyskać minimum 51% punktów, aby zaliczyć przedmiot.
 
+> # WAŻNA INFORMACJA - PRZYPOMNIENIE!
+> **Projekt zaliczeniowy, to zaliczenie przedmiotu!**
+>
+>Zgodnie z [REGULAMINEM STUDIÓW W SWPS UNIWERSYTECIE HUMANISTYCZNOSPOŁECZNYM](https://bip.swps.pl/attachments/1020/download) §6 pkt 2 ppkt 4) i ppkt 6) student ma obowiązek do _"**poszanowania praw własności intelektualnej** i dóbr osobistych osób trzecich, w szczególności majątkowych i osobistych praw autorskich oraz przestrzegania uczelnianych przepisów dotyczących praw własności intelektualnej"_ oraz  _"rzetelnego, terminowego i **samodzielnego** wykonywania zadań nałożonych przez osoby prowadzące zajęcia, a wynikających z realizowanego programu studiów oraz decyzji organów i osób działających w imieniu Uczelni w zakresie organizacji studiów"_, co jednoznacznie odnosi się do samodzielności wykonania m.in. prac zaliczeniowych.
+>
+> Przypominam również, że zgodnie z §8  _"Student podlega odpowiedzialności dyscyplinarnej za naruszenie przepisów obowiązujących w Uczelni oraz za czyn uchybiający godności studenta na zasadach określonych w Ustawie."_, co może skutkować nawet skreśleniem z listy studentów.
+>
+> Informuję, że w związku z tym **każda praca zaliczeniowa, która będzie osądzona o pracę niesamodzielną i zostanie to udowodnione i zweryfikowane przez prowadzącego oceniona będzie na 0 pkt**.
+
+
 ## Kontakt do prowadzących
 - Krzysztof Ropiak ([kropiak@swps.edu.pl](mailto:kropiak@swps.edu.pl))
 - Adrian Albrecht ([aalbrecht@swps.edu.pl](mailto:aalbrecht@swps.edu.pl))
